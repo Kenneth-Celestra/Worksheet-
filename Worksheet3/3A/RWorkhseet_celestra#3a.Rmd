@@ -1,0 +1,135 @@
+---
+title: "RWorksheet_Celestra#3a"
+author: "Kenneth Celestra"
+date: "2024-10-02"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+1.
+a.
+```{r}
+LET11 <- LETTERS[1:11]
+```
+b. 
+```{r}
+LETODD <- LETTERS[seq(1,26, by=2)]
+```
+c. 
+```{r}
+LETVOW <-LETTERS[LETTERS %in% c("A","E","I","O","U")]
+LETVOW
+```
+d.
+```{r}
+fivelower <- letters[22:26]
+fivelower
+```
+e. 
+```{r}
+letbetween <- letters[15:24]
+letbetween
+```
+2.
+```{r}
+temp <- c(42,39,34,34,30,27)
+names(temp) <- c("Tuguegarao City", "Manila", "Iloilo City", "Tacloban", "Samal Island", "Davao City")
+print(temp)
+```
+a.
+```{r}
+city <- c("Tuguegarao City", "Manila", "Iloilo City", "Tacloban", "Samal Island", "Davao City")
+city
+```
+b.
+```{r}
+temp <- c(42,39,34,34,30,27)
+```
+c.
+```{r}
+citytemp <- data.frame(city,temp)
+citytemp
+```
+d.
+```{r}
+names(citytemp)<- c("City", "Temperature")
+citytemp
+```
+e.The output says there are 6 observations and 2 variables followed by the City and Temperature
+```{r}
+str(citytemp)
+```
+f.
+```{r}
+citytemp[3:4,]
+```
+g.
+```{r}
+highest<- citytemp[which.max(citytemp$Temperature),]
+lowest<- citytemp[which.min(citytemp$Temperature),]
+highest
+lowest
+```
+2.
+a.
+```{r}
+mymatrix<- matrix(c(1:8,11:14), nrow=3, ncol=4)
+mymatrix
+```
+b.
+```{r}
+myMatrix<- mymatrix*2
+myMatrix
+```
+c.
+```{r}
+myMatrix[2,]
+```
+d.
+```{r}
+myMatrix[1:2, 3:4]
+```
+e.
+```{r}
+myMatrix[3,2:3]
+```
+f.
+```{r}
+myMatrix[,4]
+```
+g.
+```{r}
+rownames(myMatrix)<- c("isa", "dalawa", "tatlo")
+colnames(myMatrix)<- c("uno", "dos", "tres", "quatro")
+myMatrix
+```
+h.
+```{r}
+dim(mymatrix)<- c(6,2)
+mymatrix
+```
+3.
+```{r}
+num<- c(1,2,3,6,7,8,9,0,3,4,5,1)
+rep2<- rep(num, each=2)
+myarray<- array(rep2, dim= c(2,4,3))
+myarray
+```
+b.
+```{r}
+dim(myarray)
+```
+c. 
+```{r}
+rownames(myarray)<- letters[1:2]
+colnames(myarray)<- LETTERS[1:4]
+dimnames(myarray)[[3]]<- c("1st-Dimensional Array", "2nd-Dimensional Array", "3rd-Dimensional Array")
+myarray
+```
+
+
+
+
