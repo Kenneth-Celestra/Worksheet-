@@ -104,11 +104,11 @@ a.
   snackprice <- as.integer(readline(prompt = "Enter the price of the snack (divisible by 50): "))
   
   for (i in bills) {
-    if (snackprice >= i) {
+    if (!is.na(snackprice) && !is.na(i) && snackprice >= i) {
       count <- snackprice %/% i
       numbills <- numbills + count
       snackprice <- snackprice %% i
-    }
+    } 
   }
 paste("Minimum number of bills needed:", numbills)
 ```
@@ -135,5 +135,39 @@ for (i in 1:nrow(df)) {
     print(paste(df$Name[i], "'s average grade this semester is", round(avg, 2)))
  } 
 }
+```
+c.
+```{r}
+grades <- df[, 2:5]
+testavg <- colSums(grades) / nrow(grades)
+
+for (i in 1:length(testavg)) {
+  if (testavg[i] < 80) {
+    print(paste("The", i,"th test was difficult."))
+  }
+}
+
+```
+d.
+```{r}
+
+for (i in 1:nrow(df)) {
+  highest <- df$Grade1[i]
+  
+  if (df$Grade2[i] > highest) {
+    highest <- df$Grade2[i]
+  }
+  if (df$Grade3[i] > highest) {
+    highest <- df$Grade3[i]
+  }
+  if (df$Grade4[i] > highest) {
+    highest <- df$Grade4[i]
+  }
+  
+  if (highest > 90) {
+    print(paste(df$Name[i], "'s highest grade this semester is", highest))
+  }
+}
+
 ```
 
