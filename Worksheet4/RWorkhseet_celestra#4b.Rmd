@@ -1,0 +1,185 @@
+---
+title: "RWorksheet_Celestra#4b"
+author: "Kenneth Celestra"
+date: "2024-10-30"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+1.
+```{r}
+vectorA <- c(1, 2, 3, 4, 5)
+
+matrixA <- matrix(0, nrow = 5, ncol = 5)
+
+for (i in 1:5) {
+  for (j in 1:5) {
+    matrixA[i, j] <- abs(i-j)
+  }
+}
+
+print(matrixA)
+
+```
+2.
+```{r}
+# Number of rows
+num_rows <- 5
+
+
+for (i in 1:num_rows) 
+  cat(strrep(' "*"', i), "\n")
+
+
+```
+3.
+```{r}
+# start <- as.integer(readline(prompt = "Enter the starting number for Fibonacci sequence: "))
+
+start <- 1
+a <- start
+b <- 1
+
+repeat {
+  if (a >= start) {
+    cat(a, " ")
+  }
+  
+  next_number <- a + b
+  a <- b
+  b <- next_number
+  
+  if (a > 500) {
+    break
+  }
+}
+```
+4.
+a
+```{r}
+data <- read.csv("Shoe_sizes.csv")
+head(data)
+```
+b
+```{r}
+maledata <- subset(data, Gender == "M")
+femaledata <- subset(data, Gender == "F")
+
+num_male <- nrow(maledata)
+num_female <- nrow(femaledata)
+
+cat("Number of Male observations:", num_male, "\n")
+cat("Number of Female observations:", num_female, "\n")
+
+```
+c
+```{r}
+# Sample data for Household Data with counts of males and females
+gender_counts <- table(data$Gender)
+
+barplot(
+  gender_counts,
+  main = "Number of Males and Females", 
+  col = c("blue", "pink"), # Colors for bars
+  names.arg = c("Male", "Female"),
+  xlab = "Gender",
+  ylab = "Count",
+)
+legend(
+  "topright",
+  legend = c("Male", "Female"),
+  fill = c("blue", "pink")
+)
+
+```
+5.
+a
+```{r}
+expenses <- c(Food = 60, Electricity = 10, Savings = 5, Miscellaneous = 25)
+
+percent_labels <- paste(names(expenses), round(expenses / sum(expenses) * 100, 1), "%")
+
+pie(
+  expenses,
+  labels = percent_labels,
+  col = c("blue", "green", "orange", "pink"),
+  main = "Dela Cruz Family Monthly Expenses"
+)
+
+```
+6.
+```{r}
+data(iris)
+```
+a
+```{r}
+str(iris)
+```
+The Sepal.Length representing the length of the sepal (in centimeters).
+Sepal.Width representing the width of the sepal.
+Petal.Length representing the length of the petal.
+Petal.Width representing the width of the petal.
+Species A factor variable with 3 levels: "setosa", "versicolor", and "virginica", representing three species of iris flowers.
+
+b
+```{r}
+mean_values <- colMeans(iris[, 1:4])  
+
+mean_values
+
+```
+c
+```{r}
+species_counts <- table(iris$Species)
+
+percent_labels <- paste(names(species_counts), round(species_counts / sum(species_counts) * 100, 1), "%")
+
+pie(
+  species_counts,
+  labels = percent_labels,
+  col = c("lightblue", "lightgreen", "lightcoral"), # Colors for each species
+  main = "Species Distribution in the Iris Dataset" # Title
+)
+
+legend(
+  "topright",
+  legend = names(species_counts),
+  fill = c("lightblue", "lightgreen", "lightcoral")
+)
+
+```
+d
+```{r}
+setosa_subset <- subset(iris, Species == "setosa")
+versicolor_subset <- subset(iris, Species == "versicolor")
+virginica_subset <- subset(iris, Species == "virginica")
+
+print(tail(setosa_subset, 6))
+
+print(tail(versicolor_subset, 6))
+
+print(tail(virginica_subset, 6))
+
+```
+e
+```{r}
+iris$Species <- as.factor(iris$Species)
+
+plot(
+  iris$Sepal.Length,
+  iris$Sepal.Width,
+  main = "Iris Dataset", 
+  sub = "Sepal width and length", 
+  xlab = "Sepal Length (cm)",
+  ylab = "Sepal Width (cm)", 
+  pch = 21,
+  col = iris$Species,
+  bg = iris$Species, 
+  cex = 1.5 
+)
+```
+f
+The scatterplot depicts the relationship between Sepal.Length and Sepal.Width for three iris species: setosa, versicolor, and virginica. Setosa is clearly clustered in the lower left quadrant, with smaller dimensions, distinguishing it from the other species. Versicolor exhibits a broader range of sizes, overlapping with virginica, which generally has larger measurements.
