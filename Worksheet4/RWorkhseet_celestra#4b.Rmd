@@ -199,7 +199,63 @@ alexa_data$variation <- gsub("White  Plus", "WhitePlus", alexa_data$variation)
 alexa_data$variation <- gsub("White  Show", "WhiteShow", alexa_data$variation)
 alexa_data$variation <- gsub("White  Spot", "WhiteSpot", alexa_data$variation)
 
-alexa_data$variation[1052:2000]
+knitr::include_graphics("/cloud/project/Worksheet4/Screenshot 2024-11-02 153147.png")
+```
+b
+```{r}
+library(dplyr)
+
+variations.RData <- alexa_data %>%
+  count(alexa_data$variation)
+
+save(variations.RData, file = "variations.RData")
+
+print(variations.RData)
+
+
+```
+c
+```{r}
+barplot(
+  variations.RData$n, 
+  names.arg = variations.RData$`alexa_data$variation`, 
+  cex.names = 0.2,
+  main = "Count of Variations",         
+  xlab = "Variations",                   
+  ylab = "Count",                       
+  col = rainbow(length(variations.RData$n)),  
+  border = "blue"                        
+)
+
+```
+d
+```{r}
+bw_variations <- variations.RData %>%
+  filter(grepl("^Black|^White", `alexa_data$variation`))
+
+par(mfrow = c(1, 2))
+
+barplot(
+  bw_variations$n[bw_variations$`alexa_data$variation` %in% c("Black", "BlackPlus", "BlackShow", "BlackSpot", "BlackDot")], 
+  names.arg = bw_variations$`alexa_data$variation`[bw_variations$`alexa_data$variation` %in% c("Black", "BlackPlus", "BlackShow", "BlackSpot", "BlackDot")], 
+  cex.names = 0.2,
+  main = "Black Variations",         
+  xlab = "Variations",                    
+  ylab = "Count",                             
+  col = "black",
+  border = "blue"
+)
+
+barplot(
+  bw_variations$n[bw_variations$`alexa_data$variation` %in% c("White", "WhitePlus", "WhiteShow", "WhiteSpot", "WhiteDot")], 
+  names.arg = bw_variations$`alexa_data$variation`[bw_variations$`alexa_data$variation` %in% c("White", "WhitePlus", "WhiteShow", "WhiteSpot", "WhiteDot")], 
+  cex.names = 0.2,
+  main = "White Variations",         
+  xlab = "Variations",                        
+  ylab = "Count",                              
+  col = "white",                              
+  border = "blue"                           
+)
 
 ```
 
