@@ -1,0 +1,152 @@
+---
+title: "RWorksheet_Celestra#4c"
+author: "Kenneth Celestra"
+date: "2024-11-03"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+1.
+```{r}
+library(ggplot2)
+data("mpg")
+write.csv(mpg, "mpg.csv", row.names = FALSE)
+
+```
+a
+```{r}
+mpg_data <- read.csv("mpg.csv")
+head(mpg_data)
+```
+b.
+The Categorical variables in the are:
+
+manufacturer- manufacturer name
+model- model name
+trans- type of transmission
+drv- type of drive train (f, r, 4)
+fl- fuel type
+class- "type" of car
+
+c.
+The Continuous variables in the mpg dataset are:
+
+displ- engine displacement, in liters
+year- year of manufacture 
+cyl- number of cylinders
+cty- city miles per gallon
+hwy- highway miles per gallon
+
+2.
+```{r}
+library(dplyr)
+
+mostModels <- mpg %>%
+  group_by(manufacturer) %>%
+  summarize(num_models = n_distinct(model)) %>%
+  arrange(desc(num_models)) %>%
+  slice(1)
+
+mostModels
+```
+```{r}
+mostVariations<- mpg %>%
+  group_by(model) %>%
+  summarize(num_variations = n()) %>%
+  arrange(desc(num_variations)) %>%
+  slice(1)  
+
+mostVariations
+```
+a
+```{r}
+unique_models <- mpg %>%
+  group_by(manufacturer) %>%
+  summarize(unique_models = n_distinct(model)) %>%
+  arrange(desc(unique_models))
+
+unique_models
+
+```
+b
+```{r}
+barplot(unique_models$unique_models,
+        names.arg = unique_models$manufacturer,
+        las = 2,  
+        col = "skyblue",
+        main = "Number of Unique Models per Manufacturer",
+        ylab = "Unique Models")
+
+```
+```{r}
+library(ggplot2)
+
+ggplot(unique_models, aes(x = reorder(manufacturer, -unique_models), y = unique_models)) +
+  geom_bar(stat = "identity", fill = "skyblue") +
+  labs(title = "Number of Unique Models per Manufacturer", x = "Manufacturer", y = "Unique Models") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+```
+2.
+a It visually displays the distribution and overlap of models among different manufacturers, helping identify how many models each manufacturer has and any common models between them.
+```{r}
+ggplot(mpg, aes(model, manufacturer)) + geom_point()
+```
+b. The scatter plot created by ggplot(mpg, aes(model, manufacturer)) + geom_point() has limitations, such as overlapping points and lack of context regarding important features like fuel efficiency or engine size. To make it more informative, you could add color to represent a variable like city miles per gallon (cty) and size for engine displacement (displ). Alternatively, using faceting with facet_wrap() can create separate panels for each manufacturer, enhancing clarity. Boxplots or violin plots could effectively show the distribution of continuous variables, such as city MPG, across manufacturers. Finally, employing interactive visualizations with packages like plotly allows users to explore the data dynamically, providing a richer understanding of the relationships in the dataset.
+
+3.
+```{r}
+top20 <- mpg %>%
+  arrange(desc(year)) %>%
+  head(20)
+
+ggplot(top20, aes(x = model, y = year)) +
+  geom_point(color = "blue", size = 3, alpha = 0.7) + 
+  labs(title = "Top 20 Car Models by Year",
+       x = "Car Model",
+       y = "Year") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        panel.background = element_blank(),
+        panel.grid.major = element_line(color = "gray", size = 0.5),
+        panel.grid.minor = element_blank())
+
+```
+4.
+```{r}
+carcount<- mpg %>%
+  group_by(model) %>%
+  summarize(num_cars = n())
+carcount
+
+```
+a
+```{r}
+ggplot(carcount, aes(x = reorder(model, num_cars), y = num_cars)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Top 20 Car Models by Number of Cars",
+       y = "Number of Cars",
+       x = "Car Model")
+```
+b
+```{r}
+ggplot(carcount, aes(x = reorder(model, num_cars), y = num_cars)) +
+  geom_bar(stat = "identity") +
+  coord_flip() +  
+  labs(title = "Top 20 Car Models by Number of Cars",
+       x = "Number of Cars",
+       y = "Car Model")
+```
+5.
+a The scatter plot between the number of cylinders (cyl) and engine displacement (displ) generally shows a positive correlation, indicating that as the number of cylinders increases, engine displacement also tends to rise. Vehicles with more cylinders typically have larger engines, which is reflected in the clustering of points. While most vehicles follow this trend, there may be outliers—such as those with fewer cylinders but larger displacement—due to advanced engineering or turbocharging. Overall, this relationship underscores how engine design commonly associates a higher cylinder count with increased displacement, suggesting greater power and fuel consumption potential.
+```{r}
+ggplot(mpg, aes(x = cyl, y = displ, color = displ)) +
+  geom_point() +  
+  labs(title = "Relationship between No. of Cylinders and Engine Displacement",
+       x = "Number of Cylinders",
+       y = "Engine Displacement (L)")
+
+```
+

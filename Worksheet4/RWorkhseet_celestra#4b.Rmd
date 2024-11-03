@@ -2,7 +2,10 @@
 title: "RWorksheet_Celestra#4b"
 author: "Kenneth Celestra"
 date: "2024-10-30"
-output: pdf_document
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
 ---
 
 ```{r setup, include=FALSE}
@@ -219,9 +222,9 @@ c
 barplot(
   variations.RData$n, 
   names.arg = variations.RData$`alexa_data$variation`, 
-  cex.names = 0.2,
+  las = 2,
+  cex.names = 0.4,
   main = "Count of Variations",         
-  xlab = "Variations",                   
   ylab = "Count",                       
   col = rainbow(length(variations.RData$n)),  
   border = "blue"                        
@@ -238,9 +241,9 @@ par(mfrow = c(1, 2))
 barplot(
   bw_variations$n[bw_variations$`alexa_data$variation` %in% c("Black", "BlackPlus", "BlackShow", "BlackSpot", "BlackDot")], 
   names.arg = bw_variations$`alexa_data$variation`[bw_variations$`alexa_data$variation` %in% c("Black", "BlackPlus", "BlackShow", "BlackSpot", "BlackDot")], 
-  cex.names = 0.2,
+  las = 2,
+  cex.names = 1,
   main = "Black Variations",         
-  xlab = "Variations",                    
   ylab = "Count",                             
   col = "black",
   border = "blue"
@@ -249,9 +252,9 @@ barplot(
 barplot(
   bw_variations$n[bw_variations$`alexa_data$variation` %in% c("White", "WhitePlus", "WhiteShow", "WhiteSpot", "WhiteDot")], 
   names.arg = bw_variations$`alexa_data$variation`[bw_variations$`alexa_data$variation` %in% c("White", "WhitePlus", "WhiteShow", "WhiteSpot", "WhiteDot")], 
-  cex.names = 0.2,
+  las = 2,
+  cex.names = 1,
   main = "White Variations",         
-  xlab = "Variations",                        
   ylab = "Count",                              
   col = "white",                              
   border = "blue"                           
