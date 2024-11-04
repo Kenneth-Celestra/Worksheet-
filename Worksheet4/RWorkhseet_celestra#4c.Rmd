@@ -149,4 +149,151 @@ ggplot(mpg, aes(x = cyl, y = displ, color = displ)) +
        y = "Engine Displacement (L)")
 
 ```
+6
+```{r}
+library(ggplot2)
+
+ggplot(mpg, aes(x = displ, y = hwy, color = cty)) +
+  geom_point() +
+  labs(
+       x = "Engine Displacement (L)",
+       y = "Highway MPG",
+       color = "City MPG") +
+  theme_minimal()
+
+```
+There is negative correlation between displ and hwy. As engine displacement increases, highway miles per gallon (MPG) tends to decrease. This trend reflects that larger engines generally consume more fuel and have lower MPG.
+
+This output occurs because larger engines (higher displacement) usually require more fuel, resulting in lower MPG values. By mapping cty as the color, we gain additional insight into fuel efficiency: vehicles with better highway MPG often have better city MPG as well. This correlation is a result of engine design and efficiency standards that impact fuel consumption across both highway and city driving conditions.
+
+6.
+a
+```{r}
+traffic <- read.csv("traffic.csv")
+
+#number of observations
+dim(traffic)  
+
+#variables in the dataset
+names(traffic)
+
+```
+b
+```{r}
+junction_data1 <- subset(traffic, Junction == "1")
+junction_data2 <- subset(traffic, Junction == "2")
+junction_data3 <- subset(traffic, Junction == "3")
+junction_data4 <- subset(traffic, Junction == "4")
+junction_data1
+junction_data2
+junction_data3
+junction_data4
+```
+c
+```{r}
+# Plot for Junction 1
+plot1 <- ggplot(junction_data1, aes(x = DateTime, y = Vehicles, group = Junction)) +
+  geom_line(color = "blue") +
+  labs(title = "Traffic Volume at Junction 1", x = "DateTime", y = "Vehicles")
+
+# Plot for Junction 2
+plot2 <- ggplot(junction_data2, aes(x = DateTime, y = Vehicles, group = Junction)) +
+  geom_line(color = "red") +
+  labs(title = "Traffic Volume at Junction 2", x = "DateTime", y = "Vehicles")
+
+# Plot for Junction 3
+plot3 <- ggplot(junction_data3, aes(x = DateTime, y = Vehicles, group = Junction)) +
+  geom_line(color = "green") +
+  labs(title = "Traffic Volume at Junction 3", x = "DateTime", y = "Vehicles")
+
+# Plot for Junction 4
+plot4 <- ggplot(junction_data4, aes(x = DateTime, y = Vehicles, group = Junction)) +
+  geom_line(color = "purple") +
+  labs(title = "Traffic Volume at Junction 4", x = "DateTime", y = "Vehicles")
+
+plot1
+plot2
+plot3
+plot4
+
+```
+7.
+a
+```{r}
+library("readxl")
+alexa_data <- read_excel("alexa_file.xlsx") 
+
+dimensions <- dim(alexa_data)
+number_of_observations <- dimensions[1]  
+number_of_columns <- dimensions[2]        
+
+number_of_observations
+number_of_columns
+```
+b.
+
+```{r}
+library(dplyr)
+
+variation_counts <- alexa_data %>%
+  group_by(variation) %>%           
+  summarize(Count = n()) 
+print(variation_counts)
+
+```
+c
+```{r}
+library(ggplot2)
+
+ggplot(variation_counts, aes(x = reorder(variation, Count), y = Count)) +  
+  geom_bar(stat = "identity", fill = "steelblue") +           
+  labs(title = "Count of Each Variation",
+       x = "Variation",
+       y = "Count") +
+  theme_minimal() +                                           
+  coord_flip()                                                
+```
+d
+```{r}
+alexa_data$date <- as.Date(alexa_data$date)
+
+daily_reviews <- alexa_data %>%
+  group_by(date) %>%
+  summarise(total_verified_reviews = sum(feedback))
+
+# Plot the data
+ggplot(daily_reviews, aes(x = date, y = total_verified_reviews)) +
+  geom_line(color = "blue") +
+  labs(title = "Number of Verified Reviews Over Time",
+       x = "Date",
+       y = "Total Verified Reviews") +
+  theme_minimal()
+```
+e
+```{r}
+variation_ratings <- alexa_data %>%
+  group_by(variation) %>%                
+  summarize(Average_Rating = mean(as.numeric(rating), na.rm = TRUE)) %>%  
+  arrange(desc(Average_Rating))         
+print(variation_ratings)
+
+```
+```{r}
+highest_variation <- variation_ratings %>%
+  slice(1)  
+print(highest_variation)
+
+```
+```{r}
+ggplot(variation_ratings, aes(x = reorder(variation, Average_Rating), y = Average_Rating)) +  
+  geom_bar(stat = "identity", fill = "steelblue") +           
+  labs(title = "Average Rating by Variation",
+       x = "Variation",
+       y = "Average Rating") +
+  theme_minimal() +                                           
+  coord_flip()                                                          
+
+```
+
+
 
