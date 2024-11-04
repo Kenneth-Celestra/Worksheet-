@@ -27,7 +27,7 @@ The Categorical variables in the are:
 manufacturer- manufacturer name
 model- model name
 trans- type of transmission
-drv- type of drive train (f, r, 4)
+drv- type of drive train 
 fl- fuel type
 class- "type" of car
 
@@ -184,10 +184,6 @@ junction_data1 <- subset(traffic, Junction == "1")
 junction_data2 <- subset(traffic, Junction == "2")
 junction_data3 <- subset(traffic, Junction == "3")
 junction_data4 <- subset(traffic, Junction == "4")
-junction_data1
-junction_data2
-junction_data3
-junction_data4
 ```
 c
 ```{r}
